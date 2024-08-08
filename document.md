@@ -1,9 +1,10 @@
 # Authentication
 
 1. [x] Sign up
-2. [ ] Login
-3. [ ] Guard Middleware
-4. [ ] Protected Routes
-5. [ ] Logout
-6. [ ] Forgot Password
-7. [ ] Reset Password
+2. [x] Login
+3. [x] Guard Middleware
+4. [x] Guest Middleware
+5. [x] Protected Routes
+6. [ ] Logout
+7. [ ] Forgot Password
+8. [ ] Reset Password

@@ -1,0 +1,12 @@
+{
+  "presets": ["@babel/preset-env"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "extensions": [".js"],
+        "root": ["./src"] // Adjust this path to match your source directory
+      }
+    ]
+  ]
+}

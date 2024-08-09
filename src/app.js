@@ -1,11 +1,20 @@
 import express from "express";
 
+import firebase from "firebase-admin";
+
+import morgan from "morgan";
+
+import cors from "cors";
+
 import config from "../config.js";
+
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const serviceAccount = require("../medium-clone-d469e-firebase-adminsdk-7bii4-126b1954cb.json");
 
 import setup_db from "./database/index.js";
 
 import auth from "./features/auth/index.js";
-import morgan from "morgan";
 
 class Server {
   constructor() {
@@ -16,7 +25,14 @@ class Server {
     setup_db();
   }
 
+  setup_google_auth() {
+    firebase.initializeApp({
+      credential: firebase.credential.cert(serviceAccount),
+    });
+  }
+
   setup_standard_middleware() {
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.static("public"));
@@ -36,6 +52,7 @@ class Server {
   start() {
     this.setup_db();
     this.setup_server();
+    this.setup_google_auth();
     this.setup_standard_middleware();
     this.mountRoutes();
 

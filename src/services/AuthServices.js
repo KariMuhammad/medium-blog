@@ -23,19 +23,30 @@ class AuthServices {
 
       return user;
     } catch (error) {
-      throw ApiError.internal(error.message);
+      throw ApiError.badRequest(error.message);
     }
   }
 
   async login(email, password) {
     const user = await this.userModel.findOne({ "personal_info.email": email });
 
+    if (user && user.google_auth) {
+      throw ApiError.badRequest(
+        "You signed up with google, please sign in with google"
+      );
+    }
+
     if (!user) {
       throw ApiError.badRequest("Credentials are invalid (email)");
     }
 
-    if (!(await user.comparePassword(password))) {
-      throw ApiError.badRequest("Credentials are invalid (password)");
+    try {
+      if (!(await user.comparePassword(password))) {
+        throw ApiError.badRequest("Credentials are invalid (password)");
+      }
+    } catch (error) {
+      // if there is an error, it means this error occurs inside the comparePassword method
+      throw ApiError.internal(error.message);
     }
 
     return user;

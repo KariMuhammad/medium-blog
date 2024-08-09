@@ -155,6 +155,8 @@ userSchema.set("toObject", { virtuals: true });
 userSchema.pre("save", async function (next) {
   if (!this.isModified("personal_info.password.value")) return next();
 
+  if (this.google_auth) return next();
+
   try {
     this.personal_info.password.value = await ecnryptPassword(
       this.personal_info.password.value
@@ -171,6 +173,9 @@ userSchema.pre("save", async function (next) {
  * @returns
  */
 userSchema.methods.comparePassword = async function (incomingPassword) {
+  // If user signed up with google, they don't have password, so they can't login with password
+  if (!this.personal_info.password.value) return false;
+
   return await bcrypt.compare(
     incomingPassword,
     this.personal_info.password.value

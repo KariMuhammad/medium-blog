@@ -86,6 +86,12 @@ class Validator {
       validateRequest,
     ];
   }
+
+  signWithGoogle() {
+    return [
+      body("access_token").notEmpty().withMessage("Choose account to sign"),
+    ];
+  }
 }
 
 export default new Validator();

@@ -13,4 +13,11 @@ router.get("/profile", guard(), auth.profile());
 router.post("/sign-up", guest(), validate.sign_up(), auth.register());
 router.post("/sign-in", guest(), validate.sign_in(), auth.login());
 
+router.post(
+  "/google-auth",
+  guest(),
+  validate.signWithGoogle(),
+  auth.signWithGoogle()
+);
+
 export default router;

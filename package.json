@@ -21,7 +21,8 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.3.2",
     "morgan": "^1.10.0",
-    "nanoid": "^4.0.2"
+    "nanoid": "^4.0.2",
+    "nodemailer": "^6.9.14"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",

@@ -1,8 +1,2 @@
-POST http://localhost:8000/auth/sign-up
+GET http://localhost:8000/get-s3-url
 Content-Type: application/json
-
-{
-    "fullname": "Kunaal",
-    "email": "kunaa@gma.com",
-    "password": "Kunaal1A"
-}

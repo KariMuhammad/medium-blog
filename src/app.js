@@ -15,6 +15,7 @@ const serviceAccount = require("../medium-clone-d469e-firebase-adminsdk-7bii4-12
 import setup_db from "./database/index.js";
 
 import auth from "./features/auth/index.js";
+import { generateUploadUrl } from "./utils/index.js";
 
 class Server {
   constructor() {
@@ -28,6 +29,18 @@ class Server {
   setup_google_auth() {
     firebase.initializeApp({
       credential: firebase.credential.cert(serviceAccount),
+    });
+  }
+
+  setup_aws_s3_route() {
+    this.app.get("/get-s3-url", async (req, res) => {
+      try {
+        const url = await generateUploadUrl();
+        return res.status(200).json({ url });
+      } catch (error) {
+        console.log("Error", error);
+        return res.status(500).json({ error: error.message });
+      }
     });
   }
 
@@ -46,6 +59,7 @@ class Server {
   }
 
   mountRoutes() {
+    this.setup_aws_s3_route();
     this.app.use("/auth", auth.router);
   }
 

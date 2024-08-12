@@ -17,6 +17,7 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 | POST   | /auth/sign-in     | Login a user        | YES  |
 | POST   | /auth/google-auth | Login with Google   | YES  |
 | GET    | /auth/profile     | Get user profile    | YES  |
+| POST   | /blogs            | Create a new blog   | YES  |
 
 # AWS S3 Setup
 
@@ -37,3 +38,13 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 8. created a new policy for the user.
 9. We created a new user. (to get the access key and secret key)
 10. attached the policy to the user.
+
+## Feature/ Blog
+
+1. [x] Create a new blog
+2. [x] Upload a blog image
+3. [] Get all blogs
+4. [] Get a single blog
+5. [] Update a blog
+6. [] Delete a blog
+7. [] Implement Query Features (Filter, Search, Sort, Pagination, Limit, Fields)

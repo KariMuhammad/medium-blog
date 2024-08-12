@@ -40,6 +40,9 @@ export function guard() {
         const token = authorization.split(" ")[1];
         const payload = AuthServices.verifyToken(token);
 
+        if (!payload)
+          return next(ApiError.unauthorized("Unauthorized, Please Login"));
+
         // Check if user exists
         const user = await User.findById(payload.id);
         if (!user) return next(ApiError.notFound("Account is not exists!"));
@@ -47,7 +50,9 @@ export function guard() {
         // user exists? check password changed at
         // if password changed at date is greater than iat of token (created_at)
         // that means user changed password after token is created!
-        const passwordChangedAt = int(user.passwordChangedAt.getTime() / 1000);
+        const passwordChangedAt = int(
+          Date.parse(user.passwordChangedAt) / 1000
+        );
         if (passwordChangedAt > payload.iat)
           return next(ApiError.unauthorized("Please Login again!"));
 

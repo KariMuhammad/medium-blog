@@ -1,2 +1,19 @@
-GET http://localhost:8000/get-s3-url
+POST http://localhost:8000/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+
+{
+    "title": "How are you doing?",
+    "content": ["I am doing well", "How about you?"],
+    "description": "Helpful for SEO",
+    "tags": ["hello", "world"],
+    "banner": "https://medium-blog-bucket.s3.eu-north-1.amazonaws.com/0hvj2JE5fQsUqjAm4U24h-1723454833846.jpeg"
+}
+
+# POST http://localhost:8000/auth/sign-in
+# Content-Type: application/json
+
+# {
+#     "email": "kimoomar@hotmail.com",
+#     "password": "Kemo123123123"
+# }

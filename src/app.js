@@ -15,7 +15,10 @@ const serviceAccount = require("../medium-clone-d469e-firebase-adminsdk-7bii4-12
 import setup_db from "./database/index.js";
 
 import auth from "./features/auth/index.js";
+import blog from "./features/blog/index.js";
+
 import { generateUploadUrl } from "./utils/index.js";
+import { guard } from "./shared/auth-middleware.js";
 
 class Server {
   constructor() {
@@ -61,6 +64,7 @@ class Server {
   mountRoutes() {
     this.setup_aws_s3_route();
     this.app.use("/auth", auth.router);
+    this.app.use("/blogs", blog.router);
   }
 
   start() {

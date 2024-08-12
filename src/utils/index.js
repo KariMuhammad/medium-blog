@@ -15,6 +15,8 @@ import config from "../../config.js";
 export function validateRequest(req, res, next) {
   const errors = validationResult(req);
 
+  // console.log(req.body);
+
   if (!errors.isEmpty()) {
     const extractedErrors = [];
 

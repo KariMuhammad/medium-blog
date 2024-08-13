@@ -1,29 +1,50 @@
+import CRUDRepository from "../../../repository/crud-repository.js";
 import Blog from "../../../Schema/Blog.js";
-import User from "../../../Schema/User.js";
 import ApiError from "../../../services/ApiError.js";
 
-class BlogRepository {
+class BlogRepository extends CRUDRepository {
+  constructor() {
+    super(Blog);
+  }
+
   /**
    * @description Get all blogs
    * @returns {Promise<Blog[]>}
    */
-  async getBlogs() {
-    return await Blog.find();
+  async read(query = {}) {
+    const blogs = await super.read(query);
+    return blogs;
+  }
+
+  /**
+   *
+   * @param {*} id
+   * @param {*} query
+   * @returns {Promise<Blog>}
+   */
+  async readOne(id, query = {}) {
+    const blog = await super.readOne(id, query);
+    return blog;
   }
 
   /**
    * @description Create a blog resource
    * @param {*} req
-   * @returns
+   * @returns {Promise<Blog>}
    */
-  createBlog(req) {
-    try {
-      const blog = new Blog(req.body);
+  create(req) {
+    const blog = super.create(req.body);
+    return blog;
+  }
 
-      return blog;
-    } catch (error) {
-      throw ApiError.badRequest(error.message);
-    }
+  /**
+   * @description Update a blog resource
+   * @param {*} req
+   * @returns {Promise<Blog>}
+   */
+  async update(id, req) {
+    const blog = await super.update(id, req.body);
+    return blog;
   }
 }
 

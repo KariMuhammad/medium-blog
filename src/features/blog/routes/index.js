@@ -2,12 +2,26 @@ import { Router } from "express";
 
 import { guard } from "../../../shared/auth-middleware.js";
 
+import parameter from "../../../validations/parameter-validation.js";
+
 import blog from "../controllers/index.js";
+
 import validation from "../validation/index.js";
+
+import Blog from "../../../Schema/Blog.js";
 
 const router = Router();
 
-router.get("/", blog.getBlogs());
-router.post("/", guard(), validation.create(), blog.createBlog());
+router
+  .route("/")
+  .get(blog.read())
+  .post(guard(), validation.create(), blog.create());
+
+router
+  .route("/:id")
+  .all(parameter.isExistId(Blog))
+  .get(blog.readOne())
+  .patch(blog.update())
+  .delete(blog.delete());
 
 export default router;

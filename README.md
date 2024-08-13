@@ -48,3 +48,12 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 5. [] Update a blog
 6. [] Delete a blog
 7. [] Implement Query Features (Filter, Search, Sort, Pagination, Limit, Fields)
+
+## Today - CRUD Repository [13/8]
+
+1. Basic CRUD Repository [DONE]
+2. Add Query Features in read operation [DOING]
+
+## Generic Validations [13/8]
+
+1. Add route Validation middlewares for check 'id' is valid/exist or not [DONE]

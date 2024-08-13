@@ -4,10 +4,10 @@ import { nanoid } from "nanoid";
 import User from "../../../Schema/User.js";
 
 class BlogController {
-  getBlogs() {
+  read() {
     return async (req, res, next) => {
       try {
-        const blogs = await BlogRepository.getBlogs();
+        const blogs = await BlogRepository.read();
         return res.status(200).json({ blogs });
       } catch (error) {
         return next(error);
@@ -15,7 +15,18 @@ class BlogController {
     };
   }
 
-  createBlog() {
+  readOne() {
+    return async (req, res, next) => {
+      try {
+        const blog = await BlogRepository.readOne(req.params.id, req.query);
+        return res.status(200).json({ blog });
+      } catch (error) {
+        return next(error);
+      }
+    };
+  }
+
+  create() {
     return async (req, res, next) => {
       try {
         req.body["author"] = req.user.id;
@@ -23,7 +34,7 @@ class BlogController {
           lower: true,
         });
 
-        const blog = BlogRepository.createBlog(req);
+        const blog = await BlogRepository.create(req);
 
         await blog.save().then(async (blog) => {
           await User.findByIdAndUpdate(req.body.author, {
@@ -33,6 +44,28 @@ class BlogController {
         });
 
         return res.status(201).json({ blog });
+      } catch (error) {
+        return next(error);
+      }
+    };
+  }
+
+  update() {
+    return async (req, res, next) => {
+      try {
+        const blog = await BlogRepository.update(req.params.id, req);
+        return res.status(200).json({ blog });
+      } catch (error) {
+        return next(error);
+      }
+    };
+  }
+
+  delete() {
+    return async (req, res, next) => {
+      try {
+        await BlogRepository.delete(req.params.id);
+        return res.status(204).json({ message: "deleted!" });
       } catch (error) {
         return next(error);
       }

@@ -7,7 +7,7 @@ class BlogController {
   read() {
     return async (req, res, next) => {
       try {
-        const blogs = await BlogRepository.read();
+        const blogs = await BlogRepository.read(req.query);
         return res.status(200).json({ blogs });
       } catch (error) {
         return next(error);

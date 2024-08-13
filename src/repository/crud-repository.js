@@ -1,4 +1,5 @@
 import ApiError from "../services/ApiError.js";
+import QueryFeatures from "../services/QueryFeatures.js";
 
 /**
  * @description CRUDRepository class to handle all the CRUD operations
@@ -23,11 +24,16 @@ class CRUDRepository {
 
   async read(query = {}) {
     try {
-      const documents = await this.model.find(query);
-      // QueryFeatures
+      const mongooseQuery = await new QueryFeatures(
+        this.model.find({}),
+        query
+      ).all();
+
+      const documents = await mongooseQuery.query;
 
       return documents;
     } catch (error) {
+      console.log(error.message);
       throw ApiError.badRequest(
         `Error reading document in ${this.collectionName} collection`
       );

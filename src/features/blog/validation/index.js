@@ -16,7 +16,7 @@ class Validation {
       // because draft is not published yet!
 
       body("content")
-        .if(body("draft").equals(false))
+        .if(body("draft").equals("false"))
         .notEmpty()
         .withMessage("Blog content is required!")
         .isArray()
@@ -24,7 +24,7 @@ class Validation {
         .isLength({ min: 3 })
         .withMessage("Content must be at least 3 strings long!"),
       body("description")
-        .if(body("draft").equals(false))
+        .if(body("draft").equals("false"))
         .notEmpty()
         .withMessage("Description is required!")
         .isLength({ min: 5, max: 200 })
@@ -33,7 +33,7 @@ class Validation {
         ),
 
       body("tags")
-        .if(body("draft").equals(false))
+        .if(body("draft").equals("false"))
         .notEmpty()
         .withMessage("Tags are required!")
         .isArray()
@@ -44,7 +44,7 @@ class Validation {
         }),
 
       body("banner")
-        .if(body("draft").equals(false))
+        .if(body("draft").equals("false"))
         .notEmpty()
         .withMessage("Banner is required!")
         .isURL()

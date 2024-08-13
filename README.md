@@ -43,17 +43,22 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 
 1. [x] Create a new blog
 2. [x] Upload a blog image
-3. [] Get all blogs
-4. [] Get a single blog
-5. [] Update a blog
-6. [] Delete a blog
+3. [x] Get all blogs
+4. [x] Get a single blog
+5. [x] Update a blog
+6. [x] Delete a blog
 7. [] Implement Query Features (Filter, Search, Sort, Pagination, Limit, Fields)
 
 ## Today - CRUD Repository [13/8]
 
 1. Basic CRUD Repository [DONE]
-2. Add Query Features in read operation [DOING]
+2. Add Query Features in read operation [DONE]
 
 ## Generic Validations [13/8]
 
 1. Add route Validation middlewares for check 'id' is valid/exist or not [DONE]
+
+## Update Blog [14/8]
+
+1. Updating title will update the slug
+2. add validation for update blog

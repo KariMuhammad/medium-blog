@@ -56,8 +56,9 @@ const blogSchema = new mongoose.Schema(
       ref: "comments",
     },
     draft: {
-      type: Boolean,
-      default: false,
+      type: String,
+      enum: ["true", "false"],
+      default: "false",
     },
   },
   {

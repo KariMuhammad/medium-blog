@@ -20,9 +20,9 @@
 
 # 
 
-# GET http://localhost:8000/blogs
-# Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+GET http://localhost:8000/blogs?fields=-title&sort=title&limit=2&page=2&draft=true
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
 
 # 
 
@@ -40,6 +40,6 @@
 
 # 
 
-DELETE http://localhost:8000/blogs/66bb52f4effcd59fd0fa2df8
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+# DELETE http://localhost:8000/blogs/66bb52f4effcd59fd0fa2df8
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg

@@ -18,6 +18,8 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 | POST   | /auth/google-auth | Login with Google   | YES  |
 | GET    | /auth/profile     | Get user profile    | YES  |
 | POST   | /blogs            | Create a new blog   | YES  |
+| GET    | /blogs/latest     | Get latest blogs    | YES  |
+| GET    | /blogs/trending   | Get trending blogs  | YES  |
 
 # AWS S3 Setup
 
@@ -47,7 +49,7 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 4. [x] Get a single blog
 5. [x] Update a blog
 6. [x] Delete a blog
-7. [] Implement Query Features (Filter, Search, Sort, Pagination, Limit, Fields)
+7. [x] Implement Query Features (Filter, Search, Sort, Pagination, Limit, Fields)
 
 ## Today - CRUD Repository [13/8]
 

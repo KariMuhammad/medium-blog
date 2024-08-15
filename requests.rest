@@ -1,3 +1,5 @@
+# [Create a Blog]
+
 # POST http://localhost:8000/blogs
 # Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
@@ -10,6 +12,8 @@
 #     "banner": "https://medium-blog-bucket.s3.eu-north-1.amazonaws.com/0hvj2JE5fQsUqjAm4U24h-1723454833846.jpeg"
 # }
 
+# [Login]
+
 # POST http://localhost:8000/auth/sign-in
 # Content-Type: application/json
 
@@ -18,17 +22,19 @@
 #     "password": "Kemo123123123"
 # }
 
-# 
+# [Get all blogs with Request Query features]
 
-GET http://localhost:8000/blogs?fields=-title&sort=title&limit=2&page=2&draft=true
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+# GET http://localhost:8000/blogs?fields=-title&sort=title&limit=2&page=2&draft=true
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
 
-# 
+# [Get a Specific Blog]
 
 # GET http://localhost:8000/blogs/66ba150911097ab52d37407e
 # Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+
+# [Update a Blog]
 
 # PATCH http://localhost:8000/blogs/66ba150911097ab52d37407e
 # Content-Type: application/json
@@ -38,8 +44,32 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmM
 #     "title": "G"
 # }
 
-# 
+# [Delete a Blog]
 
 # DELETE http://localhost:8000/blogs/66bb52f4effcd59fd0fa2df8
 # Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+
+# [Get Blogs]
+
+# GET http://localhost:8000/blogs
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+
+
+# [Latest Blogs]
+
+# GET http://localhost:8000/blogs/latest-blogs
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+
+# Tredning Blogs
+
+# GET http://localhost:8000/blogs/trending-blogs
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+
+# [Get Blogs by Tag]
+GET http://localhost:8000/blogs?tags=anime
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg

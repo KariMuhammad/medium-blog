@@ -25,7 +25,7 @@ class CRUDRepository {
   async read(query = {}) {
     try {
       const mongooseQuery = await new QueryFeatures(
-        this.model.find({}),
+        this.model.find({}).populate("author"),
         query
       ).all();
 

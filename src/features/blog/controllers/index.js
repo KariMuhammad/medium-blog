@@ -71,6 +71,28 @@ class BlogController {
       }
     };
   }
+
+  latestBlogs() {
+    return async (req, res, next) => {
+      try {
+        const blogs = await BlogRepository.latestBlogs(req.query);
+        return res.status(200).json({ blogs });
+      } catch (error) {
+        return next(error);
+      }
+    };
+  }
+
+  trendingBlogs() {
+    return async (req, res, next) => {
+      try {
+        const blogs = await BlogRepository.trendingBlogs();
+        return res.status(200).json({ blogs });
+      } catch (error) {
+        return next(error);
+      }
+    };
+  }
 }
 
 export default new BlogController();

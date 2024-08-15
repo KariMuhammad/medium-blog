@@ -17,6 +17,9 @@ router
   .get(blog.read())
   .post(guard(), validation.create(), blog.create());
 
+router.get("/latest-blogs", blog.latestBlogs());
+router.get("/trending-blogs", blog.trendingBlogs());
+
 router
   .route("/:id")
   .all(parameter.isExistId(Blog))

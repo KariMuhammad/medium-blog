@@ -84,24 +84,25 @@ class QueryFeatures {
   }
 
   async paginate() {
-    const { page, limit } = this.requestQuery;
-    const skip = (page - 1) * limit;
+    const { page = 1, limit = 2 } = this.requestQuery;
+    const skip = (+page - 1) * +limit;
 
     const allDocuments = await this.query.clone().countDocuments();
 
     this.query.limit(limit).skip(skip);
 
+    const totalPages = Math.ceil(allDocuments / +limit);
+
     const pagination = {
-      totalPages: Math.ceil(allDocuments / limit),
-      get nextPage() {
-        return page < this.totalPages ? page + 1 : null;
-      },
-      get prevPage() {
-        return page > 1 ? page - 1 : null;
-      },
+      totalPages,
+      currentPage: +page,
+      nextPage: +page < totalPages ? +page + 1 : null,
+      prevPage: +page > 1 ? +page - 1 : null,
     };
 
     this.pagination = pagination;
+
+    console.log(pagination);
 
     return this;
   }

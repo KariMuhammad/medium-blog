@@ -8,7 +8,8 @@ class BlogController {
     return async (req, res, next) => {
       try {
         const blogs = await BlogRepository.read(req.query);
-        return res.status(200).json({ blogs });
+
+        return res.status(200).json({ data: blogs });
       } catch (error) {
         return next(error);
       }

@@ -17,8 +17,8 @@ router
   .get(blog.read())
   .post(guard(), validation.create(), blog.create());
 
-router.get("/latest-blogs", blog.latestBlogs());
-router.get("/trending-blogs", blog.trendingBlogs());
+router.get("/latest", blog.latestBlogs());
+router.get("/trending", blog.trendingBlogs());
 
 router
   .route("/:id")

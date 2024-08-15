@@ -25,13 +25,11 @@ class CRUDRepository {
   async read(query = {}) {
     try {
       const mongooseQuery = await new QueryFeatures(
-        this.model.find({}).populate("author"),
+        this.model.find({}),
         query
       ).all();
 
-      const documents = await mongooseQuery.query;
-
-      return documents;
+      return mongooseQuery;
     } catch (error) {
       console.log(error.message);
       throw ApiError.badRequest(
@@ -57,7 +55,7 @@ class CRUDRepository {
   /**
    * @description Update a document in the collection
    */
-  async update(id, data) {
+  async update(id, data = {}) {
     try {
       const document = await this.model.findByIdAndUpdate(id, data, {
         new: true,

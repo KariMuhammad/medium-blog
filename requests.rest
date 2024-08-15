@@ -70,6 +70,6 @@
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
 
 # [Get Blogs by Tag]
-GET http://localhost:8000/blogs?tags=anime
+GET http://localhost:8000/blogs/latest?page=2
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg

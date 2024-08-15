@@ -12,8 +12,15 @@ class BlogRepository extends CRUDRepository {
    * @returns {Promise<Blog[]>}
    */
   async read(query = {}) {
-    const blogs = await super.read(query);
-    return blogs;
+    console.log(query);
+    const blogsQuery = await super.read(query);
+    const blogs = await blogsQuery.query.populate("author", "-_id -password");
+    const pagination = blogsQuery.pagination;
+
+    return {
+      blogs,
+      pagination,
+    };
   }
 
   /**
@@ -61,9 +68,11 @@ class BlogRepository extends CRUDRepository {
    * @description Get latest blogs
    * @returns {Promise<Blog[]>}
    */
-  async latestBlogs() {
+  async latestBlogs(query = {}) {
     try {
-      const blogs = await Blog.find({ draft: "false" })
+      const blogsQuery = await super.read(query);
+      const blogs = await blogsQuery.query
+        .find({ draft: "false" })
         .populate({
           path: "author",
           select:
@@ -73,16 +82,23 @@ class BlogRepository extends CRUDRepository {
         .select(
           "-_id banner title description tags activity blog_id publishedAt"
         );
-      return blogs;
+
+      return {
+        blogs,
+        pagination: blogsQuery.pagination,
+      };
     } catch (error) {
       console.log(error);
       throw ApiError.internal("Something went wrong in getting latest blogs!");
     }
   }
 
-  async trendingBlogs() {
+  async trendingBlogs(query = {}) {
     try {
-      const blogs = await Blog.find({ draft: false })
+      const blogsQuery = await super.read(query);
+
+      const blogs = await blogsQuery.query
+        .find({ draft: "false" })
         .populate("author", "personal_info.fullname personal_info.profile_img")
         .sort({
           "activity.total_likes": -1,
@@ -100,3 +116,24 @@ class BlogRepository extends CRUDRepository {
 }
 
 export default new BlogRepository();
+
+/**
+ * async latestBlogs() {
+    try {
+      const blogs = await Blog.find({ draft: "false" })
+        .populate({
+          path: "author",
+          select:
+            "personal_info.fullname personal_info.username personal_info.profile_img -_id",
+        })
+        .sort({ publishedAt: -1 })
+        .select(
+          "-_id banner title description tags activity blog_id publishedAt"
+        );
+      return blogs;
+    } catch (error) {
+      console.log(error);
+      throw ApiError.internal("Something went wrong in getting latest blogs!");
+    }
+  }
+ */

@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import User from "./User.js";
 
 const blogSchema = new mongoose.Schema(
   {
@@ -67,5 +68,15 @@ const blogSchema = new mongoose.Schema(
     },
   }
 );
+
+// blogSchema.pre("save", async function (next) {
+//   const authorId = this.author;
+
+//   await User.findByIdAndUpdate(authorId, {
+//     $inc: { "account_info.total_posts": this.draft === "true" ? 0 : 1 },
+//   }).then(() => next());
+
+//   next();
+// });
 
 export default mongoose.model("blogs", blogSchema);

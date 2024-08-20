@@ -59,17 +59,35 @@
 
 # [Latest Blogs]
 
-# GET http://localhost:8000/blogs/latest-blogs
+# GET http://localhost:8000/blogs/latest?search=Git
 # Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
 
 # Tredning Blogs
 
-# GET http://localhost:8000/blogs/trending-blogs
+# GET http://localhost:8000/blogs/trending
 # Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
 
 # [Get Blogs by Tag]
-GET http://localhost:8000/blogs/latest?page=2
+# GET http://localhost:8000/blogs/latest?page=2
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+
+# [Search]
+# GET http://localhost:8000/search?q=m&page=3
+# Content-Type: application/json
+# # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+
+# [Get user by id]
+# GET http://localhost:8000/users/john1723807192060
+# Content-Type: application/json
+
+# [Get Blog by blog_id]
+# GET http://localhost:8000/blogs/blog/comic-funny-frsjit1n8nzodkz_tcqqw
+# Content-Type: application/json
+
+# [Like]
+PATCH http://localhost:8000/blogs/like/66c31eef6c26e8dcb26e075d
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YjQ3NWNmMWRiMTM2YjcyOWQ0Nzc5MyIsImlhdCI6MTcyMzQ2MTgyMCwiZXhwIjoxNzIzNjM0NjIwfQ.tT8jt6ck1JuowCqychMOd-fY_ogvhTCsbc0RoUYlswg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YmYzNWU4NDIxMmRhNTYwMjk5OGMyYSIsImlhdCI6MTcyMzk3NzIwMCwiZXhwIjoxNzI0MTUwMDAwfQ.7f5XO5WO4YfRmTy8zww7YLprAUXSn4RtkVOfFQ_gWB8

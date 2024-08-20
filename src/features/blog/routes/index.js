@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { guard } from "../../../shared/auth-middleware.js";
+import { guard, isGuarded } from "../../../shared/auth-middleware.js";
 
 import parameter from "../../../validations/parameter-validation.js";
 
@@ -19,12 +19,17 @@ router
 
 router.get("/latest", blog.latestBlogs());
 router.get("/trending", blog.trendingBlogs());
+router.get("/user/:id", blog.readByUser());
+router.get("/blog/:blog_id", isGuarded(), blog.readBySlug());
 
 router
   .route("/:id")
-  .all(parameter.isExistId(Blog))
+  .all(parameter.isValidBlogSlug())
   .get(blog.readOne())
   .patch(blog.update())
   .delete(blog.delete());
+
+router.route("/like/:id").patch(guard(), blog.like());
+router.route("/unlike/:id").patch(guard(), blog.unlike());
 
 export default router;

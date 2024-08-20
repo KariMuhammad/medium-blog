@@ -16,9 +16,11 @@ import setup_db from "./database/index.js";
 
 import auth from "./features/auth/index.js";
 import blog from "./features/blog/index.js";
+import user from "./features/users/index.js";
+
+import root from "./root/index.js";
 
 import { generateUploadUrl } from "./utils/index.js";
-import { guard } from "./shared/auth-middleware.js";
 
 class Server {
   constructor() {
@@ -63,7 +65,9 @@ class Server {
 
   mountRoutes() {
     this.setup_aws_s3_route();
+    this.app.use("/search", root.router);
     this.app.use("/auth", auth.router);
+    this.app.use("/users", user.router);
     this.app.use("/blogs", blog.router);
   }
 

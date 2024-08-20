@@ -68,6 +68,47 @@ export function guard() {
 }
 
 /**
+ * @description middleware alike guard but does not throw error if not authenticated
+ * @returns {Function} Middleware function
+ */
+export function isGuarded() {
+  return async (req, res, next) => {
+    checkAuthHeader()(req, res, async (error) => {
+      if (error) return next();
+
+      // Present? Extract from Token (user id, iat)
+      const { authorization } = req.headers;
+      try {
+        const token = authorization.split(" ")[1];
+        const payload = AuthServices.verifyToken(token);
+
+        if (!payload) return next();
+
+        // Check if user exists
+        const user = await User.findById(payload.id);
+        if (!user) return next();
+
+        // user exists? check password changed at
+        // if password changed at date is greater than iat of token (created_at)
+        // that means user changed password after token is created!
+        if (!user.google_auth) {
+          const passwordChangedAt = int(
+            Date.parse(user.passwordChangedAt) / 1000
+          );
+          if (passwordChangedAt > payload.iat) return next();
+        }
+
+        // All is OK
+        req.user = user;
+        return next();
+      } catch (error) {
+        return next();
+      }
+    });
+  };
+}
+
+/**
  * @description Middleware to check if user is authenticated + user is admin
  * @returns {Function} Middleware function
  */

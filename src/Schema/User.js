@@ -106,8 +106,9 @@ const userSchema = new mongoose.Schema(
         default: 0,
       },
       total_reads: {
-        type: Number,
-        default: 0,
+        type: [Schema.Types.ObjectId],
+        ref: "blogs",
+        default: [],
       },
     },
     google_auth: {

@@ -22,12 +22,9 @@ class CRUDRepository {
     }
   }
 
-  async read(query = {}) {
+  async read(query = this.model.find({}), requestQuery = {}) {
     try {
-      const mongooseQuery = await new QueryFeatures(
-        this.model.find({}),
-        query
-      ).all();
+      const mongooseQuery = await new QueryFeatures(query, requestQuery).all();
 
       return mongooseQuery;
     } catch (error) {
@@ -41,9 +38,9 @@ class CRUDRepository {
   /**
    * @description Read one document from the collection
    */
-  async readOne(id, query = {}) {
+  async readOne(id, requestQuery = {}) {
     try {
-      const document = await this.model.findById(id, query);
+      const document = await this.model.findById(id, requestQuery);
       return document;
     } catch (error) {
       throw ApiError.badRequest(
@@ -56,14 +53,24 @@ class CRUDRepository {
    * @description Update a document in the collection
    */
   async update(id, data = {}) {
+    const [key, value] = Object.entries(id)[0];
+    console.log("Object [id] key:value", key, value);
     try {
-      const document = await this.model.findByIdAndUpdate(id, data, {
-        new: true,
-        runValidators: true,
-      });
+      const document = await this.model.findOneAndUpdate(
+        {
+          [key]: value,
+        },
+        data,
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
 
       return document;
     } catch (error) {
+      console.log(error.message);
+
       throw ApiError.badRequest(
         `Error updating document in ${this.collectionName} collection`
       );

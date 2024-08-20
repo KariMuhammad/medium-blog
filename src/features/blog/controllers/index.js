@@ -2,6 +2,8 @@ import slugify from "slugify";
 import BlogRepository from "../repositories/index.js";
 import { nanoid } from "nanoid";
 import User from "../../../Schema/User.js";
+import Notification from "../../../Schema/Notification.js";
+import ApiError from "../../../services/ApiError.js";
 
 class BlogController {
   read() {
@@ -54,7 +56,10 @@ class BlogController {
   update() {
     return async (req, res, next) => {
       try {
-        const blog = await BlogRepository.update(req.params.id, req);
+        const blog = await BlogRepository.update(
+          { blog_id: req.params.id },
+          req
+        );
         return res.status(200).json({ blog });
       } catch (error) {
         return next(error);
@@ -87,8 +92,95 @@ class BlogController {
   trendingBlogs() {
     return async (req, res, next) => {
       try {
-        const blogs = await BlogRepository.trendingBlogs();
+        const blogs = await BlogRepository.trendingBlogs(req.query);
         return res.status(200).json({ blogs });
+      } catch (error) {
+        return next(error);
+      }
+    };
+  }
+
+  readByUser() {
+    return async (req, res, next) => {
+      try {
+        const blogs = await BlogRepository.readByUser(req);
+
+        return res.status(200).json({ blogs });
+      } catch (error) {
+        return next(error);
+      }
+    };
+  }
+
+  readBySlug() {
+    return async (req, res, next) => {
+      try {
+        const user = req.user ? req.user.id : null;
+        let userLiked = false;
+
+        const blog = await BlogRepository.readBySlug(req);
+
+        if (user) {
+          const current_user = await User.findById(user);
+          if (!current_user.account_info.total_reads.includes(blog._id)) {
+            current_user.updateOne({
+              $push: { "account_info.total_reads": blog._id },
+            });
+
+            console.log("Incrementing total reads");
+
+            // await blog.updateOne({ $inc: { "activity.total_reads": 1 } });
+
+            // Check if user liked the blog
+            if (
+              await Notification.exists({
+                blog: blog._id,
+                user: user,
+                type: "like",
+              })
+            )
+              userLiked = true;
+          }
+        }
+        console.log({ blog, liked: userLiked });
+
+        return res.status(200).json({ blog: { ...blog, liked: userLiked } });
+      } catch (error) {
+        console.log(error.message);
+
+        return ApiError.internal(error.message);
+      }
+    };
+  }
+
+  like() {
+    return async (req, res, next) => {
+      try {
+        const {
+          activity: { total_likes },
+        } = await BlogRepository.like({ _id: req.params.id }, req.user.id);
+        return res.status(200).json({
+          status: 200,
+          message: "Liked successfully!",
+          data: total_likes,
+        });
+      } catch (error) {
+        return next(error);
+      }
+    };
+  }
+
+  unlike() {
+    return async (req, res, next) => {
+      try {
+        const {
+          activity: { total_likes },
+        } = await BlogRepository.unlike({ _id: req.params.id }, req.user.id);
+        return res.status(200).json({
+          status: 200,
+          message: "Unliked successfully!",
+          data: total_likes,
+        });
       } catch (error) {
         return next(error);
       }

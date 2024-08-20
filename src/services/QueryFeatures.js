@@ -15,8 +15,8 @@ class QueryFeatures {
   projection() {
     const { fields } = this.requestQuery;
 
-    if (fields) this.query.select(fields.split(", ").join(" "));
-    else this.query.select("-__v");
+    if (fields) this.query = this.query.select(fields.split(", ").join(" "));
+    else this.query = this.query.select("-__v");
 
     return this;
   }
@@ -29,8 +29,8 @@ class QueryFeatures {
   sort() {
     const { sort } = this.requestQuery;
 
-    if (sort) this.query.sort(sort.split(", ").join(" "));
-    else this.query.sort("-createdAt"); // reently added
+    if (sort) this.query = this.query.sort(sort.split(", ").join(" "));
+    else this.query = this.query.sort("-publishedAt"); // reently added
 
     return this;
   }
@@ -45,9 +45,9 @@ class QueryFeatures {
     const { search: searchTerm } = this.requestQuery;
     if (!searchTerm) return this;
 
-    this.query.find({
+    this.query = this.query.find({
       $or: keys.map((key) => ({
-        [key]: { $regex: `/\b${searchTerm}\b/i` },
+        [key]: { $regex: `.*${searchTerm}.*`, $options: "i" },
       })),
     });
 
@@ -78,18 +78,27 @@ class QueryFeatures {
     // convert the queries string to object
     queries = JSON.parse(_queries_string);
 
-    this.query.find(queries);
+    // if some query property is array, convert it to $in query
+    for (const key in queries) {
+      if (queries[key].includes(","))
+        queries[key] = { $in: queries[key].split(",") };
+    }
+
+    this.query = this.query.find(queries);
 
     return this;
   }
 
   async paginate() {
     const { page = 1, limit = 2 } = this.requestQuery;
-    const skip = (+page - 1) * +limit;
+    const skip = (page > 0 ? page - 1 : 0) * +limit;
+
+    // Log values for debugging
+    console.log("Page:", page, "Limit:", limit, "Skip:", skip);
 
     const allDocuments = await this.query.clone().countDocuments();
 
-    this.query.limit(limit).skip(skip);
+    this.query = this.query.skip(skip).limit(+limit);
 
     const totalPages = Math.ceil(allDocuments / +limit);
 
@@ -102,13 +111,13 @@ class QueryFeatures {
 
     this.pagination = pagination;
 
-    console.log(pagination);
+    console.log("Pagination info:", pagination);
 
     return this;
   }
 
-  async all() {
-    return await this.search("title").filter().sort().projection().paginate();
+  all() {
+    return this.filter().search("title").sort().projection().paginate();
   }
 }
 

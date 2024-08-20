@@ -64,3 +64,32 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 
 1. Updating title will update the slug
 2. add validation for update blog
+
+## Like/Dislike Blog [20/8] - DONE
+
+1. Like a blog
+2. Dislike a blog
+
+| Method | Endpoint           | Description    | DONE |
+| ------ | ------------------ | -------------- | ---- |
+| POST   | /blogs/like/:id    | Like a blog    | YES  |
+| POST   | /blogs/dislike/:id | Dislike a blog | YES  |
+
+## Comment Blog [20/8] - Working
+
+1. Comment a blog
+2. Get all comments of a blog
+3. Update a comment
+4. Delete a comment
+5. Like/Dislike a comment
+6. Reply to a comment
+7. Get replies of a comment
+
+| Method | Endpoint                       | Description       | DONE |
+| ------ | ------------------------------ | ----------------- | ---- |
+| POST   | /blogs/:id/comment             | Comment a blog    | YES  |
+| GET    | /blogs/:id/comments            | Get all comments  | YES  |
+| PUT    | /blogs/:id/comment/:id         | Update a comment  | YES  |
+| DELETE | /blogs/:id/comment/:id         | Delete a comment  | YES  |
+| POST   | /blogs/:id/comment/:id/like    | Like a comment    | YES  |
+| POST   | /blogs/:id/comment/:id/dislike | Dislike a comment | YES  |

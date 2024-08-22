@@ -176,7 +176,7 @@ class BlogRepository extends CRUDRepository {
           "author",
           "personal_info.fullname personal_info.username personal_info.profile_img personal_info.bio"
         )
-        .select("-__v");
+        .select("-__v -comments -draft");
 
       return blog;
     } catch (error) {

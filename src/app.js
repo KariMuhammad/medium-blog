@@ -14,11 +14,11 @@ const serviceAccount = require("../medium-clone-d469e-firebase-adminsdk-7bii4-12
 
 import setup_db from "./database/index.js";
 
+import root from "./root/index.js";
 import auth from "./features/auth/index.js";
 import blog from "./features/blog/index.js";
 import user from "./features/users/index.js";
-
-import root from "./root/index.js";
+import comments from "./features/comments/index.js";
 
 import { generateUploadUrl } from "./utils/index.js";
 
@@ -69,6 +69,7 @@ class Server {
     this.app.use("/auth", auth.router);
     this.app.use("/users", user.router);
     this.app.use("/blogs", blog.router);
+    this.app.use("/comments", comments.router);
   }
 
   start() {

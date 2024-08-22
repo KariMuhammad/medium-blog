@@ -88,6 +88,41 @@
 # Content-Type: application/json
 
 # [Like]
-PATCH http://localhost:8000/blogs/like/66c31eef6c26e8dcb26e075d
+# PATCH http://localhost:8000/blogs/like/66c31eef6c26e8dcb26e075d
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YmYzNWU4NDIxMmRhNTYwMjk5OGMyYSIsImlhdCI6MTcyMzk3NzIwMCwiZXhwIjoxNzI0MTUwMDAwfQ.7f5XO5WO4YfRmTy8zww7YLprAUXSn4RtkVOfFQ_gWB8
+
+
+# [Dislike]
+# PATCH http://localhost:8000/blogs/dislike/66c31eef6c26e8dcb26e075d
+# Content-Type: application/json
+# Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YmYzNWU4NDIxMmRhNTYwMjk5OGMyYSIsImlhdCI6MTcyMzk3NzIwMCwiZXhwIjoxNzI0MTUwMDAwfQ.7f5XO5WO4YfRmTy8zww7YLprAUXSn4RtkVOfFQ_gWB8
+
+# [Create a Comment]
+# POST http://localhost:8000/comments/66c48d11ffb0db479791dd4a
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzQ4Yzc1ZmZiMGRiNDc5NzkxZGQ0MyIsImlhdCI6MTcyNDE1OTI4NSwiZXhwIjoxNzI0MzMyMDg1fQ.CbRnfvN2bKyvKUek5kpG5CM-tZNPPaFuS4Aa5ul6KtE
+
+# {
+#     "content": "I am doing well"
+# }
+
+# [Create a Reply]
+POST http://localhost:8000/comments/66c5c241fd4dd694cee4ca85/replies
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YmYzNWU4NDIxMmRhNTYwMjk5OGMyYSIsImlhdCI6MTcyMzk3NzIwMCwiZXhwIjoxNzI0MTUwMDAwfQ.7f5XO5WO4YfRmTy8zww7YLprAUXSn4RtkVOfFQ_gWB8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzQ4Yzc1ZmZiMGRiNDc5NzkxZGQ0MyIsImlhdCI6MTcyNDE1OTI4NSwiZXhwIjoxNzI0MzMyMDg1fQ.CbRnfvN2bKyvKUek5kpG5CM-tZNPPaFuS4Aa5ul6KtE
+
+{
+    "content": "I am replying to a reply the reply well too"
+}
+
+
+# [Get Comments]
+# GET http://localhost:8000/comments/66c48d11ffb0db479791dd4a
+# Content-Type: application/json
+
+# [Get Replies]
+# GET http://localhost:8000/comments/66c4fbb321b1ad291988b27f/replies
+# Content-Type: application/json
+
+

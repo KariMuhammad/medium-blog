@@ -85,11 +85,17 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 6. Reply to a comment
 7. Get replies of a comment
 
-| Method | Endpoint                       | Description       | DONE |
-| ------ | ------------------------------ | ----------------- | ---- |
-| POST   | /blogs/:id/comment             | Comment a blog    | YES  |
-| GET    | /blogs/:id/comments            | Get all comments  | YES  |
-| PUT    | /blogs/:id/comment/:id         | Update a comment  | YES  |
-| DELETE | /blogs/:id/comment/:id         | Delete a comment  | YES  |
-| POST   | /blogs/:id/comment/:id/like    | Like a comment    | YES  |
-| POST   | /blogs/:id/comment/:id/dislike | Dislike a comment | YES  |
+| Method | Endpoint                              | Description       | DONE |
+| ------ | ------------------------------------- | ----------------- | ---- |
+| POST   | /comments/:blogId                     | Comment a blog    | YES  |
+| GET    | /comments/:blogId                     | Get all comments  | YES  |
+| PUT    | /comments/:blogId/comment/:id         | Update a comment  | NO   |
+| DELETE | /comments/:blogId/comment/:id         | Delete a comment  | NO   |
+| POST   | /comments/:blogId/comment/:id/like    | Like a comment    | NO   |
+| POST   | /comments/:blogId/comment/:id/dislike | Dislike a comment | NO   |
+
+##### TODO
+
+1. Get Comments and Create has a huge bad code, need to be refactored
+2. Get nested replies of a comment has intensive populate code, need to be refactored
+3. Get comments should be returned as a paginated response as well as replies

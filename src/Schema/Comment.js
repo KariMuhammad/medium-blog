@@ -32,6 +32,18 @@ const commentSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "comments",
     },
+
+    activity: {
+      total_likes: {
+        type: [Schema.Types.ObjectId],
+        ref: "users",
+        default: [],
+      },
+      total_replies: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
   {
     timestamps: {

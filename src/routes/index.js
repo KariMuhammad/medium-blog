@@ -7,7 +7,7 @@ const router = Router();
 router.get("/", async (req, res, next) => {
   const { q } = req.query;
   try {
-    const blogs = await BlogRepository.search(req.query);
+    const blogs = await BlogRepository.search(req);
     const users = await User.find({
       "personal_info.fullname": { $regex: `.*${q}.*`, $options: "i" },
     }).limit(2);

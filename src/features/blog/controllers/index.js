@@ -9,7 +9,7 @@ class BlogController {
   read() {
     return async (req, res, next) => {
       try {
-        const blogs = await BlogRepository.read(req.query);
+        const blogs = await BlogRepository.read(req);
 
         return res.status(200).json({ data: blogs });
       } catch (error) {
@@ -21,7 +21,7 @@ class BlogController {
   readOne() {
     return async (req, res, next) => {
       try {
-        const blog = await BlogRepository.readOne(req.params.id, req.query);
+        const blog = await BlogRepository.readOne(req.params.id, req);
         return res.status(200).json({ blog });
       } catch (error) {
         return next(error);
@@ -37,7 +37,7 @@ class BlogController {
           lower: true,
         });
 
-        const blog = await BlogRepository.create(req);
+        const blog = await BlogRepository.create(req.body);
 
         await blog.save().then(async (blog) => {
           await User.findByIdAndUpdate(req.body.author, {
@@ -58,7 +58,7 @@ class BlogController {
       try {
         const blog = await BlogRepository.update(
           { blog_id: req.params.id },
-          req
+          req.body
         );
         return res.status(200).json({ blog });
       } catch (error) {
@@ -81,7 +81,7 @@ class BlogController {
   latestBlogs() {
     return async (req, res, next) => {
       try {
-        const blogs = await BlogRepository.latestBlogs(req.query);
+        const blogs = await BlogRepository.latestBlogs(req);
         return res.status(200).json({ blogs });
       } catch (error) {
         return next(error);
@@ -92,7 +92,7 @@ class BlogController {
   trendingBlogs() {
     return async (req, res, next) => {
       try {
-        const blogs = await BlogRepository.trendingBlogs(req.query);
+        const blogs = await BlogRepository.trendingBlogs(req);
         return res.status(200).json({ blogs });
       } catch (error) {
         return next(error);

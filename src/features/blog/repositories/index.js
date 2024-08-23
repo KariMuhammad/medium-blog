@@ -13,8 +13,8 @@ class BlogRepository extends CRUDRepository {
    * @description Get all blogs
    * @returns {Promise<Blog[]>}
    */
-  async read(requestQuery = {}) {
-    const blogsQuery = await super.read(undefined, requestQuery);
+  async read(request = {}) {
+    const blogsQuery = await super.read(undefined, request);
     const blogs = await blogsQuery.query.populate(
       "author",
       "-_id -password -google_auth"
@@ -33,8 +33,8 @@ class BlogRepository extends CRUDRepository {
    * @param {*} query
    * @returns {Promise<Blog>}
    */
-  async readOne(id, requestQuery = {}) {
-    const blog = await super.readOne(id, requestQuery);
+  async readOne(id, request = {}) {
+    const blog = await super.readOne(id, request);
     return blog;
   }
 
@@ -43,8 +43,8 @@ class BlogRepository extends CRUDRepository {
    * @param {*} req
    * @returns {Promise<Blog>}
    */
-  create(req) {
-    const blog = super.create(req.body);
+  create(data) {
+    const blog = super.create(data);
     return blog;
   }
 
@@ -53,8 +53,8 @@ class BlogRepository extends CRUDRepository {
    * @param {*} req
    * @returns {Promise<Blog>}
    */
-  async update(id, req) {
-    const blog = await super.update(id, req.body);
+  async update(id, data) {
+    const blog = await super.update(id, data);
     return blog;
   }
 
@@ -74,7 +74,7 @@ class BlogRepository extends CRUDRepository {
    * we can replace this function with a query object itself
    * @returns {Promise<Blog[]>}
    */
-  async latestBlogs(requestQuery = {}) {
+  async latestBlogs(request = {}) {
     try {
       const _query = Blog.find()
         .populate({
@@ -87,9 +87,9 @@ class BlogRepository extends CRUDRepository {
           "-_id banner title description tags activity blog_id publishedAt"
         );
 
-      requestQuery.draft = "false";
+      request.query.draft = "false";
 
-      const blogsQuery = await super.read(_query, requestQuery);
+      const blogsQuery = await super.read(_query, request);
       const blogs = await blogsQuery.query;
 
       return {
@@ -102,7 +102,7 @@ class BlogRepository extends CRUDRepository {
     }
   }
 
-  async trendingBlogs(requestQuery = {}) {
+  async trendingBlogs(request = {}) {
     try {
       const _query = Blog.find()
         .populate("author", "personal_info.fullname personal_info.profile_img")
@@ -112,10 +112,10 @@ class BlogRepository extends CRUDRepository {
           publishedAt: -1,
         })
         .select("title blog_id publishedAt");
-      requestQuery.draft = "false";
-      requestQuery.limit = 5;
+      request.query.draft = "false";
+      request.query.limit = 5;
 
-      const blogsQuery = await super.read(_query, requestQuery);
+      const blogsQuery = await super.read(_query, request);
       const blogs = await blogsQuery.query;
 
       return blogs;
@@ -124,9 +124,9 @@ class BlogRepository extends CRUDRepository {
     }
   }
 
-  async search(reqQuery = {}) {
-    const { q } = reqQuery;
-    delete reqQuery.q;
+  async search(request = {}) {
+    const { q } = request.query;
+    delete request.query.q;
 
     try {
       const _query = Blog.find({}).populate(
@@ -134,10 +134,10 @@ class BlogRepository extends CRUDRepository {
         "personal_info.fullname personal_info.profile_img"
       );
 
-      reqQuery.search = q;
-      reqQuery.draft = "false";
+      request.query.search = q;
+      request.query.draft = "false";
 
-      const blogsQuery = await super.read(_query, reqQuery);
+      const blogsQuery = await super.read(_query, request);
       const blogs = await blogsQuery.query;
 
       return {
@@ -155,7 +155,7 @@ class BlogRepository extends CRUDRepository {
         .where("draft", "false")
         .populate("author", "-google_auth -password -_id");
 
-      const blogsQuery = await super.read(_query, request.query);
+      const blogsQuery = await super.read(_query, request);
       const blogs = await blogsQuery.query;
 
       return {

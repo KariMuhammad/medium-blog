@@ -108,17 +108,17 @@
 # }
 
 # [Create a Reply]
-POST http://localhost:8000/comments/66c5c241fd4dd694cee4ca85/replies
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzQ4Yzc1ZmZiMGRiNDc5NzkxZGQ0MyIsImlhdCI6MTcyNDE1OTI4NSwiZXhwIjoxNzI0MzMyMDg1fQ.CbRnfvN2bKyvKUek5kpG5CM-tZNPPaFuS4Aa5ul6KtE
+# POST http://localhost:8000/comments/66c5c241fd4dd694cee4ca85/replies
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzQ4Yzc1ZmZiMGRiNDc5NzkxZGQ0MyIsImlhdCI6MTcyNDE1OTI4NSwiZXhwIjoxNzI0MzMyMDg1fQ.CbRnfvN2bKyvKUek5kpG5CM-tZNPPaFuS4Aa5ul6KtE
 
-{
-    "content": "I am replying to a reply the reply well too"
-}
+# {
+#     "content": "I am replying to a reply the reply well too"
+# }
 
 
 # [Get Comments]
-# GET http://localhost:8000/comments/66c48d11ffb0db479791dd4a
+# GET http://localhost:8000/comments/66c48d11ffb0db479791dd4a?page=2
 # Content-Type: application/json
 
 # [Get Replies]
@@ -126,3 +126,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzQ4Yzc1Z
 # Content-Type: application/json
 
 
+
+# Like
+POST http://localhost:8000/comments/66c86cbf48470fb6c64f1e97/like
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YzQ4Yzc1ZmZiMGRiNDc5NzkxZGQ0MyIsImlhdCI6MTcyNDQxMDI2NSwiZXhwIjoxNzI0NTgzMDY1fQ.fM87EJRfXBOJiSmraRWaB9wNtv9gTWwCkjY2KUMZV1k

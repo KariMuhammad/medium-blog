@@ -99,3 +99,11 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 1. Get Comments and Create has a huge bad code, need to be refactored
 2. Get nested replies of a comment has intensive populate code, need to be refactored
 3. Get comments should be returned as a paginated response as well as replies
+
+##### WORKING
+
+1. Response of Create Comment and Reply shouldn't be the whole list comments i think.
+
+##### DONE
+
+1. Get Comments with Pagination

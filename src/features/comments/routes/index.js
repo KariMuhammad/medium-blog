@@ -15,4 +15,12 @@ router
   .get(CommentController.getReplies())
   .post(guard(), CommentController.createReply());
 
+// like comment or reply
+// router.post("/:commentId/like", guard(), CommentController.likeComment());
+// router.post("/:commentId/dislike", guard(), CommentController.unlikeComment());
+
+// Report comment or reply
+// router.post("/:commentId/report", guard(), CommentController.reportComment());
+router.delete("/:commentId", guard(), CommentController.deleteComment());
+
 export default router;

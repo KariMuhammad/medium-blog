@@ -22,9 +22,9 @@ class CRUDRepository {
     }
   }
 
-  async read(query = this.model.find({}), requestQuery = {}) {
+  async read(query = this.model.find({}), request = {}) {
     try {
-      const mongooseQuery = await new QueryFeatures(query, requestQuery).all();
+      const mongooseQuery = await new QueryFeatures(query, request.query).all();
 
       return mongooseQuery;
     } catch (error) {
@@ -38,9 +38,9 @@ class CRUDRepository {
   /**
    * @description Read one document from the collection
    */
-  async readOne(id, requestQuery = {}) {
+  async readOne(id, request = {}) {
     try {
-      const document = await this.model.findById(id, requestQuery);
+      const document = await this.model.findById(id, request.query);
       return document;
     } catch (error) {
       throw ApiError.badRequest(

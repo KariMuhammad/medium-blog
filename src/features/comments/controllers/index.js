@@ -143,7 +143,7 @@ class CommentController {
           blog: parentComment.blog_id,
           comment: parentComment._id,
           reply: comment._id,
-          replied_on_comment: commentId,
+          replied_on_comment: parentComment._id,
         });
 
         await Blog.findByIdAndUpdate(parentComment.blog_id, {

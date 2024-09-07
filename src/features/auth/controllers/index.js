@@ -98,7 +98,7 @@ class AuthController {
 
       const token = authServices.generateToken(user);
       return res.status(200).json({
-        user,
+        user: user.personal_info,
         token,
       });
     };
@@ -111,6 +111,80 @@ class AuthController {
       return res.status(200).json({
         user,
       });
+    };
+  }
+
+  changePassword() {
+    return async (req, res, next) => {
+      authServices
+        .changePassword(
+          req.user.id,
+          req.body["current-password"],
+          req.body["new-password"]
+        )
+        .then((user) => {
+          // const token =
+          return res.status(200).json({
+            message: "Password changed successfully",
+            user,
+            token: authServices.generateToken(user),
+          });
+        })
+        .catch((error) => {
+          return next(error);
+        });
+    };
+  }
+
+  updateImage() {
+    return async (req, res, next) => {
+      const userId = req.user.id;
+      const { url } = req.body;
+
+      User.findByIdAndUpdate(userId, {
+        $set: { "personal_info.profile_img": url },
+      })
+        .then((d) => {
+          console.log("New Image", d);
+          return res.status(200).json({ url });
+        })
+        .catch((e) => {
+          return res.status(500).json({ error: e.message });
+        });
+    };
+  }
+
+  updateProfile() {
+    return async (req, res, next) => {
+      try {
+        const userId = req.user.id;
+        const { username, bio, ...social_links } = req.body;
+
+        console.log("REQ BODY", req.body);
+
+        const user = await User.findById(userId);
+
+        const updateToObject = {
+          personal_info: { ...user.personal_info, bio },
+          social_links,
+        };
+
+        if (username !== user.personal_info.username)
+          updateToObject.personal_info.username = username;
+
+        await user.updateOne({
+          $set: updateToObject,
+        });
+
+        return res.status(200).json({
+          ...user.personal_info,
+          username: updateToObject.personal_info.username,
+          bio: updateToObject.personal_info.bio,
+        });
+      } catch (error) {
+        console.log(error);
+        return next(ApiError.internal(error.message));
+      }
     };
   }
 }

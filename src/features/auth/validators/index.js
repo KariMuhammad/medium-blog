@@ -92,6 +92,92 @@ class Validator {
       body("access_token").notEmpty().withMessage("Choose account to sign"),
     ];
   }
+
+  changePassword() {
+    return [
+      body("current-password")
+        .notEmpty()
+        .withMessage("Current password is required")
+        .isLength({ min: 6 })
+        .withMessage("Password is invalid"),
+
+      body("new-password")
+        .notEmpty()
+        .withMessage("New password is required")
+        .isLength({ min: 6 })
+        .withMessage("Password is invalid")
+        .custom((password, { req }) => {
+          if (!passwordRegex.test(password))
+            throw ApiError.badRequest(
+              "Password must contain at least one number, one lowercase, one uppercase letter, and at least 6 characters"
+            );
+
+          return true;
+        }),
+
+      validateRequest,
+    ];
+  }
+
+  updateImage() {
+    return [
+      body("url").notEmpty().withMessage("Image URL is not exist!"),
+      validateRequest,
+    ];
+  }
+  updateProfile() {
+    return [
+      body("username")
+        .optional()
+        .custom(async (value, { req }) => {
+          const user = await User.findOne({ "personal_info.username": value });
+
+          if (!user) return true;
+
+          if (user.id === req.user.id.toString()) {
+            delete req.body["username"];
+            return true;
+          }
+
+          if (user) throw ApiError.badRequest("Username is already be taken!");
+
+          return true;
+        }),
+
+      body("bio")
+        .optional()
+        .isString()
+        .isLength({ min: 20, max: 200 })
+        .withMessage("min: 20, max: 200"),
+
+      body("github")
+        .optional({ values: "falsy" })
+        .isURL()
+        .withMessage("Should be a real (url)"),
+      body("facebook")
+        .optional({ values: "falsy" })
+        .isURL()
+        .withMessage("Should be a real (url)"),
+      body("instagream")
+        .optional({ values: "falsy" })
+        .isURL()
+        .withMessage("Should be a real (url)"),
+      body("website")
+        .optional({ values: "falsy" })
+        .isURL()
+        .withMessage("Should be a real (url)"),
+      body("youtube")
+        .optional({ values: "falsy" })
+        .isURL()
+        .withMessage("Should be a real (url)"),
+      body("twitter")
+        .optional({ values: "falsy" })
+        .isURL()
+        .withMessage("Should be a real (url)"),
+
+      validateRequest,
+    ];
+  }
 }
 
 export default new Validator();

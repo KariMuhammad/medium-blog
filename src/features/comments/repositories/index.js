@@ -1,5 +1,6 @@
 import CRUDRepository from "../../../repository/crud-repository.js";
 import Comment from "../../../Schema/Comment.js";
+import Blog from "../../../Schema/Blog.js";
 import Notification from "../../../Schema/Notification.js";
 import ApiError from "../../../services/ApiError.js";
 
@@ -80,23 +81,63 @@ class CommentRepository extends CRUDRepository {
       const comment = await super.readOne(commentId);
       if (!comment) throw ApiError.notFound("Comment not found");
 
+      // console.log(
+      //   comment.commented_by.toString(),
+      //   typeof userId === "string" ? userId : userId.toString()
+      // );
+
+      userId = typeof userId === "string" ? userId : userId.toString();
+
       if (comment.commented_by.toString() !== userId)
         throw ApiError.forbidden(
           "You are not authorized to delete this comment"
         );
 
-      if (!comment.commented_by === userId)
-        throw ApiError.forbidden(
-          "You are not authorized to delete this comment"
-        );
+      this.recursiveRemoveChildren(commentId);
 
-      await super.delete(commentId);
       return true;
     } catch (error) {
       console.log(error);
       if (error instanceof ApiError) throw error;
       throw ApiError.internal(error.message);
     }
+  }
+
+  recursiveRemoveChildren(commentId) {
+    super.delete(commentId).then((document) => {
+      // console.log("Document", document);
+
+      if (document.parent) {
+        super.update(
+          { _id: document.parent },
+          {
+            $pull: { children: commentId },
+            $inc: { "activity.total_replies": -1 },
+          }
+        );
+      }
+
+      Notification.findOneAndDelete({ comment: commentId }).then((_) =>
+        console.log("notfication 1", _)
+      ); // if it is comment
+      Notification.findOneAndDelete({ reply: commentId }).then((_) =>
+        console.log("notification 2", _)
+      ); // if it is reply
+
+      Blog.findByIdAndUpdate(document.blog_id, {
+        $pull: { comments: commentId },
+        $inc: {
+          "activity.total_comments": -1,
+          "activity.total_parent_comments": document.parent ? 0 : -1,
+        },
+      }).then(() => {
+        if (document.children.length) {
+          document.children.forEach((reply) =>
+            this.recursiveRemoveChildren(reply)
+          );
+        }
+      });
+    });
   }
 }
 

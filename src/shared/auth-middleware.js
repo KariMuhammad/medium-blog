@@ -36,6 +36,7 @@ export function guard() {
 
       // Present? Extract from Token (user id, iat)
       const { authorization } = req.headers;
+
       try {
         const token = authorization.split(" ")[1];
         const payload = AuthServices.verifyToken(token);
@@ -57,7 +58,25 @@ export function guard() {
           return next(ApiError.unauthorized("Please Login again!"));
 
         // All is OK
-        req.user = user;
+        // don't return all user data
+        const __user = user._doc;
+        [
+          ["personal_info", "password"],
+          "passwordChangedAt",
+          "blogs",
+          "google_auth",
+          "joinedAt",
+          "updatedAt",
+          "__v",
+        ].forEach((key) => {
+          // i want delete password field which inside personal_info
+          if (Array.isArray(key)) {
+            const [parent, child] = key;
+            delete __user[parent][child];
+          } else delete __user[key];
+        });
+
+        req.user = { ...__user, id: user._id };
       } catch (error) {
         return next(ApiError.internal(error.message));
       }

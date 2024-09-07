@@ -20,4 +20,26 @@ router.post(
   auth.signWithGoogle()
 );
 
+router.post(
+  "/change-password",
+  guard(),
+  validate.changePassword(),
+  auth.changePassword()
+);
+
+// =========================================
+router.patch(
+  "/profile-image/edit",
+  guard(),
+  validate.updateImage(),
+  auth.updateImage()
+);
+
+router.patch(
+  "/profile/edit",
+  guard(),
+  validate.updateProfile(),
+  auth.updateProfile()
+);
+
 export default router;

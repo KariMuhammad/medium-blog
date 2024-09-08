@@ -7,9 +7,10 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 3. [x] Guard Middleware
 4. [x] Guest Middleware
 5. [x] Protected Routes
-6. [ ] Logout
-7. [ ] Forgot Password
-8. [ ] Reset Password
+6. [x] Logout
+7. [x] Change Password
+8. [ ] Forgot Password
+9. [ ] Reset Password
 
 | Method | Endpoint          | Description         | DONE |
 | ------ | ----------------- | ------------------- | ---- |
@@ -75,7 +76,7 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 | POST   | /blogs/like/:id    | Like a blog    | YES  |
 | POST   | /blogs/dislike/:id | Dislike a blog | YES  |
 
-## Comment Blog [20/8] - Working
+## Comment Blog [20/8] - DONE
 
 1. Comment a blog
 2. Get all comments of a blog
@@ -99,9 +100,11 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 1. Get nested replies of a comment has intensive populate code, need to be refactored
 2. Get comments should be returned as a paginated response as well as replies
 
-##### WORKING
+##### WORKING & Upcoming
 
 - Not returning all eager loading(population) data in get comments, instead, return only the comments, and when user load replies of comment, then we fetch the replies of that comment with pagination as well.
+- Refactor the code
+- Add like/dislike feature for comments/replies
 
 ##### DONE
 
@@ -109,3 +112,5 @@ _my goasl is not just create a fully functional API, but also to write it in a w
 
 1. Response of Create Comment and Reply shouldn't be the whole list comments i think.
 2. Get Comments with Pagination
+
+##### Deployed on _Render.com_

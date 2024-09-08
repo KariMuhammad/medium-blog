@@ -16,6 +16,7 @@ class CRUDRepository {
       const document = await this.model.create(data);
       return document;
     } catch (error) {
+      console.log(error);
       throw ApiError.badRequest(
         `Error creating document in ${this.collectionName} collection`
       );
@@ -86,6 +87,7 @@ class CRUDRepository {
 
       return document;
     } catch (error) {
+      console.log(error);
       throw ApiError.badRequest(
         `Error deleting document in ${this.collectionName} collection`
       );

@@ -3,6 +3,8 @@ import ApiError from "../../../services/ApiError.js";
 
 import Blog from "../../../Schema/Blog.js";
 import Notification from "../../../Schema/Notification.js";
+import Comment from "../../../Schema/Comment.js";
+import User from "../../../Schema/User.js";
 
 class BlogRepository extends CRUDRepository {
   constructor() {
@@ -44,8 +46,12 @@ class BlogRepository extends CRUDRepository {
    * @returns {Promise<Blog>}
    */
   create(data) {
-    const blog = super.create(data);
-    return blog;
+    try {
+      const blog = super.create(data);
+      return blog;
+    } catch (error) {
+      throw ApiError.internal(error.message);
+    }
   }
 
   /**
@@ -64,8 +70,26 @@ class BlogRepository extends CRUDRepository {
    * @returns {Promise<Blog>}
    */
   async delete(id) {
-    const blog = await super.delete(id);
-    return blog;
+    try {
+      const blog = await super.delete(id).then(async (blog) => {
+        console.log(blog);
+        Notification.deleteMany({ blog: blog._id }).then((_) =>
+          console.log("Notification deleted")
+        );
+        Comment.deleteMany({ blog_id: blog._id }).then((_) =>
+          console.log("Comments deleted")
+        );
+
+        User.findByIdAndUpdate(blog.author, {
+          $pull: { blogs: blog._id },
+          $inc: { "account_info.total_posts": -1 },
+        }).then((_) => console.log("User updated"));
+      });
+
+      return blog;
+    } catch (error) {
+      throw ApiError.internal(error.message);
+    }
   }
 
   /**
@@ -154,6 +178,25 @@ class BlogRepository extends CRUDRepository {
       const _query = Blog.find({ author: request.params.id })
         .where("draft", "false")
         .populate("author", "-google_auth -password -_id");
+
+      const blogsQuery = await super.read(_query, request);
+      const blogs = await blogsQuery.query;
+
+      return {
+        blogs,
+        pagination: blogsQuery.pagination,
+      };
+    } catch (error) {
+      throw ApiError.internal(error.message);
+    }
+  }
+
+  async readDashboardBlogs(request = {}) {
+    try {
+      const _query = Blog.find({
+        author: request.user.id,
+        draft: request.query.draft || false,
+      }).select("-comments -draft -author -content -__v");
 
       const blogsQuery = await super.read(_query, request);
       const blogs = await blogsQuery.query;

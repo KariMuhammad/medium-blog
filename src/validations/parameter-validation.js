@@ -47,9 +47,12 @@ class ParameterValidation {
     validateRequest,
   ];
 
-  isValidBlogSlug = () => [
+  isValidBlogSlug = ({ id = "blog_id" }) => [
     param("id").custom(async (value, { req }) => {
-      const blog = await Blog.findOne({ blog_id: value });
+      console.log("value", value);
+      console.log("id", id);
+
+      const blog = await Blog.findOne({ [id]: value });
       if (!blog) throw Error("Blog not found");
       return true;
     }),

@@ -37,17 +37,23 @@ class BlogController {
           lower: true,
         });
 
-        const blog = await BlogRepository.create(req.body);
+        await BlogRepository.create(req.body).then(async (blog) => {
+          try {
+            await User.findByIdAndUpdate(req.body.author, {
+              $push: { blogs: blog._id },
+              $inc: {
+                "account_info.total_posts": blog.draft === "false" ? 0 : 1,
+              },
+            });
 
-        await blog.save().then(async (blog) => {
-          await User.findByIdAndUpdate(req.body.author, {
-            $push: { blogs: blog._id },
-            $inc: { "account_info.total_posts": blog.draft ? 0 : 1 },
-          });
+            return res.status(201).json({ blog });
+          } catch (error) {
+            console.log(error.message);
+            throw ApiError.internal(error.message);
+          }
         });
-
-        return res.status(201).json({ blog });
       } catch (error) {
+        console.log(error);
         return next(error);
       }
     };
@@ -104,6 +110,18 @@ class BlogController {
     return async (req, res, next) => {
       try {
         const blogs = await BlogRepository.readByUser(req);
+
+        return res.status(200).json({ blogs });
+      } catch (error) {
+        return next(error);
+      }
+    };
+  }
+
+  readDashboardBlogs() {
+    return async (req, res, next) => {
+      try {
+        const blogs = await BlogRepository.readDashboardBlogs(req);
 
         return res.status(200).json({ blogs });
       } catch (error) {

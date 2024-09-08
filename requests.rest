@@ -163,9 +163,9 @@
 # }
 
 # [Get User Profile]
-GET http://localhost:8000/auth/profile
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZGFhYjk0MDM4ZWMzMmM2MzRmODEyYyIsImlhdCI6MTcyNTY0NjcyMSwiZXhwIjoxNzI1ODE5NTIxfQ.hSU5hRAvw2UrwU5lMmyjGBeSyPJAdJeo7IhxDzceywQ
+# GET http://localhost:8000/auth/profile
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZGFhYjk0MDM4ZWMzMmM2MzRmODEyYyIsImlhdCI6MTcyNTY0NjcyMSwiZXhwIjoxNzI1ODE5NTIxfQ.hSU5hRAvw2UrwU5lMmyjGBeSyPJAdJeo7IhxDzceywQ
 
 
 
@@ -177,5 +177,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZGFhYjk0M
 # Content-Type: application/json
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2M4OWIyYmVkNWQwNzk4NWE0YjgxYyIsImlhdCI6MTcyNTYxMzIyNSwiZXhwIjoxNzI1Nzg2MDI1fQ.LfMaKW3bl7zS5ioB6V73X2fh6BA85-W2B_ZvFcmyKbU
 
+GET http://localhost:8000/blogs/dashboard?page=1&draft=false
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZGFhYjk0MDM4ZWMzMmM2MzRmODEyYyIsImlhdCI6MTcyNTcwNTExMCwiZXhwIjoxNzI1ODc3OTEwfQ.VBnMyPDi9bX4cKqyh9ZE8w0d7sNTdnl-by3mPfxDumM
 
- 

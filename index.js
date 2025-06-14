@@ -4,6 +4,8 @@ import ErrorHandler from "./src/services/ErrorHandler.js";
 
 const app = server.start().app;
 
+export default app;
+
 // Error Handling
 app.use(ErrorHandler.handle());
 
